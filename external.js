@@ -33,7 +33,7 @@ function pressed(element){
 	if (element.key == "Enter"){
 		clear();
 		var inp = input_element.value;
-		it_dict(myJson, inp);
+		it_dict(myJson.counts, inp);
 	}
 	else{
 		console.log('pressed something else');
