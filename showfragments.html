@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<button type="button" id="button2" onclick="StringSearch()">Gimme</button>
+<textarea id="text_area"></textarea>
+<p id="demo"></p>
+
+<script>
+
+function StringSearch() {
+  var input = document.getElementById("text_area").value;
+  let text = "";
+  let i = 0;
+  while (true) {
+    var result = input.match(new RegExp("\"dataFragment\":{\"data\":\"(.*?)\",\""));
+    console.log(result)
+    if (result == null) { break; }
+    text += result[1] + '<br>----------<br>';
+  document.getElementById("demo").innerHTML = text;
+    input = input.match(new RegExp("\"dataFragment\":{\"data\":\"(.*)"))[1];
+  }
+  
+}
+</script>
+
+</body>
+</html>
