@@ -23,14 +23,28 @@ function StringSearch() {
   let text = "";
   let i = 0;
   while (true) {
-    var result = input.match(new RegExp("\"dataFragment\":{\"data\":\"(.*?)\",\""));
-    console.log(result)
+    var result = input.match(new RegExp('"dataFragment":{"data":"(.*?)","'));
     if (result == null) { break; }
-    text += result[1] + '<br>----------<br>';
-  document.getElementById("demo").innerHTML = text;
-    input = input.match(new RegExp("\"dataFragment\":{\"data\":\"(.*)"))[1];
+	result = result[1];
+	
+	while (true) {
+	  if (result.includes('\\n')) {
+	    result = result.replace('\\n', '<br>');
+	  }
+	  else { break; }
+	}
+	
+	while (true) {
+	  if (result.includes('\\"')) {
+	    result = result.replace('\\"', '"');
+	  }
+	  else { break; }
+	}
+
+    text += result + '<br>----------<br>';
+    input = input.match(new RegExp('"dataFragment":{"data":"(.*)'))[1];
   }
-  
+  document.getElementById("demo").innerHTML = text;
 }
 </script>
 
