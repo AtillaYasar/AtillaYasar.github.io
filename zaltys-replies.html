@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+
+<style>
+	body {
+		font-family: "Times New Roman", Times, serif;
+		font-size: 22px;
+		background-color: black;
+		color: green;
+	}
+</style>
+
+<body>
+
+<input id='input_id'/>
+<p id="demo"></p>
+
+<script type="module">
+
+import myJson from '/zaltys-replies.json' assert {type: 'json'};
+
+function StringSearch() {
+	var term = input_element.value;
+	var text = "";
+	var myStringArray = myJson
+	for (var i = 0; i < myStringArray.length; i++) {
+	  var dict = myStringArray[i];
+	  var other = dict['Other'];
+	  var zaltys = dict['Zaltys'];
+	  var date = dict['date'];
+	  if (zaltys.includes(term)){
+	    text += date + '<br>Other: ' + other + '<br>Zaltys: ' + zaltys + '<br><br>';
+	  }
+	}
+	document.getElementById("demo").innerHTML = text;
+}
+
+function pressed() {
+  if (event.key == 'Enter') {
+    StringSearch();
+  }
+}
+var input_element = document.getElementById("input_id");
+input_element.addEventListener('keypress', pressed);
+
+</script>
+
+</body>
+</html>
