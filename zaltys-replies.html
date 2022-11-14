@@ -28,7 +28,7 @@ function StringSearch() {
 	  var other = dict['Other'];
 	  var zaltys = dict['Zaltys'];
 	  var date = dict['date'];
-	  if (zaltys.includes(term)){
+	  if (zaltys.includes(term) || other.includes(term)){
 	    text += date + '<br>Other: ' + other + '<br>Zaltys: ' + zaltys + '<br><br>';
 	  }
 	}
