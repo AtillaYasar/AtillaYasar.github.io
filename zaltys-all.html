@@ -36,8 +36,7 @@
 
 <script type="module">
 
-import myJson from '/zaltys-replies.json' assert {type: 'json'};
-
+import myJson from '/zaltys-all.json' assert {type: 'json'};
 
 function StringSearch() {
 	var term = input_element.value;
@@ -52,63 +51,7 @@ function StringSearch() {
 	  var date = arr[2];
 	  var channel = arr[3];
 	  
-	  if (zaltys.toLowerCase().includes(term.toLowerCase()) || other.toLowerCase().includes(term.toLowerCase())){
-		
-		var after = other;
-		while (true) {
-			if (after.includes("```")) {
-				var i1 = other.indexOf("```");
-				var before = other.substr(0, i1);
-				var rest = other.substr(i1+3);
-				var i2 = rest.indexOf("```");
-				var middle = other.substr(i1+3, i2);
-				var after = rest.substr(i2+3);
-				other = before + '<pre><code>' + middle + '</code></pre>' + after;
-			}
-			else {
-				break;
-			}
-		}
-		
-		var after = other;
-		while (true) {
-			if (after.includes("`")) {
-				var i1 = other.indexOf("`");
-				var before = other.substr(0, i1);
-				var rest = other.substr(i1+1);
-				var i2 = rest.indexOf("`");
-				var middle = other.substr(i1+1, i2);
-				var after = rest.substr(i2+1);
-				other = before + '<b>' + middle + '</b>' + after;
-			}
-			else {
-				break;
-			}
-		}
-		
-		var after = other;
-		while (true) {
-			if (after.includes("~~")) {
-				var i1 = other.indexOf("~~");
-				var before = other.substr(0, i1);
-				var rest = other.substr(i1+2);
-				var i2 = rest.indexOf("~~");
-				var middle = other.substr(i1+2, i2);
-				var after = rest.substr(i2+2);
-				other = before + '<del>' + middle + '</del>' + after;
-			}
-			else {
-				break;
-			}
-		}
-		
-		// highlight first occurrence of term
-		var i1 = other.toLowerCase().indexOf(term.toLowerCase());
-		if (i1 >= 0) {
-			var before = other.substr(0, i1);
-			var after = other.substr(i1+chars);
-			other = before + '<span style="color:lightgreen">' + other.substring(i1, i1+chars) + '</span>' + after;
-		}
+	  if (zaltys.toLowerCase().includes(term.toLowerCase())){
 		
 		var after = zaltys;
 		while (true) {
@@ -158,6 +101,11 @@ function StringSearch() {
 			}
 		}
 		
+		if (other=='r') {
+		  channel += ' (reply)';
+		}
+		
+		
 		// highlight first occurrence of term
 		var i1 = zaltys.toLowerCase().indexOf(term.toLowerCase());
 		if (i1 >= 0) {
@@ -165,13 +113,14 @@ function StringSearch() {
 			var after = zaltys.substr(i1+chars);
 			zaltys = before + '<span style="color:lightgreen">' + zaltys.substring(i1, i1+chars) + '</span>' + after;
 		}
-				
-		text += date + '     #' + channel + '<br><span>' + "Other:" + '</span> <br>' + other + '<br><span>' + "Zaltys:" + '</span> <br>' + zaltys + '<br><br>';
+		
+		text += date + '     #' + channel + '<br><span>' + "Zaltys:" + '</span> <br>' + zaltys + '<br><br>';
 		
 	  }
 	}
 	
 	document.getElementById("demo").innerHTML = text;
+	
 }
 
 function pressed() {
