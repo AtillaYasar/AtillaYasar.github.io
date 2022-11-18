@@ -1,6 +1,6 @@
 # AtillaYasar.github.io
 
-last major update (as of nov 18th)  
+## last major update (as of nov 18th)  
 2 sites to search from:  
 - "who the heck is zaltys" ? come to the NovelAI discord and find out.
 - zaltys-replies.html and zaltys-all.html  
@@ -18,9 +18,8 @@ screenshots from pages, searching "replies" for "attributes" (with weird capital
 <img src="replies-screenshot.bmp">
 <img src="all-screenshot.bmp">
 
-
 image pages cleanup:
 - deleted all of them. they suck.
 
 showfragments.html
-- do "copy to clipboard" on nai, poste the resulting json in the text are and write gimme to get the fragments of text from the entire history
+- do "copy to clipboard" on nai, poste the resulting json in the text are and write gimme to get the fragments of text from the entire 
