@@ -16,3 +16,4 @@
   
 image pages cleanup:  
     - deleted all of them. they suck.  
+<img src="all-screenshot.bmp">
