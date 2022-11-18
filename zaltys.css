@@ -1,0 +1,28 @@
+
+body {
+	font-family: "Times New Roman", Times, serif;
+	font-size: 22px;
+	background-color: black;
+	color: green;
+	word-wrap: break-word;
+	width: 60%;
+	margin-top:20px;
+	margin-left:10%;
+}
+
+pre {
+	overflow-x: auto;
+	white-space: pre-wrap;
+	white-space: -moz-pre-wrap;
+	white-space: -pre-wrap;
+	white-space: -o-pre-wrap;
+	word-wrap: break-word;
+	margin-left: 20px;
+	margin-top: 5px;
+	margin-bottom: 10px;
+	background-color: #111;
+}
+
+span {
+	color: purple;
+}
