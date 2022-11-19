@@ -1,6 +1,4 @@
-
 import myJson from '/zaltys-replies.json' assert {type: 'json'};
-
 
 function StringSearch() {
 	var term = input_element.value;
@@ -9,10 +7,27 @@ function StringSearch() {
 	var chars = term.length;
 	
 	for (var i = 0; i < myStringArray.length; i++) {
+	  var outdated = false;
 	  var arr = myStringArray[i];
 	  var other = arr[0];
 	  var zaltys = arr[1];
-	  var date = arr[2];
+	  
+	  /*
+	    - arr[2] is the date array: [year, month, day]
+	    - date_thing[0] tells whether it is outdated or not.
+		- date_thing[1] is the string to be shown.
+		- if date is before outdated_before and show_outdated is false (both exist in globals.js), it will stop looping. (since the json is sorted by date, everything after is also outdated)
+	  */
+	  var date_thing = process_date(arr[2]);
+	  if ( !(show_outdated) && !(date_thing[0])) {
+		  var outdated = true;
+		  break ;
+	  } else {
+		  var text_ending = '';
+	  }
+	  
+	  var date = date_thing[1];
+	  
 	  var channel = arr[3];
 	  
 	  if (zaltys.toLowerCase().includes(term.toLowerCase()) || other.toLowerCase().includes(term.toLowerCase())){
@@ -133,7 +148,10 @@ function StringSearch() {
 		
 	  }
 	}
-	
+
+	if ((outdated) && !(show_outdated)){
+		text += '<br><br>' + full_warning_string;
+	}
 	document.getElementById("demo").innerHTML = text;
 }
 
