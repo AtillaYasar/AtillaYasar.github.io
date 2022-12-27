@@ -1,0 +1,55 @@
+<html>
+<body>
+<button id="rollButton">Roll for candy</button>
+<div id="resultContainer"></div>
+
+<script>
+function roll(totalCandies, totalTime, rollEvery, loadingTime) {
+  let totalRolls = totalTime/rollEvery;
+  let evPerRoll = totalCandies/totalRolls;
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      resolve(Math.random() >= evPerRoll);
+    }, loadingTime);
+  });
+}
+
+let lastRollTime = 0;
+let maxRolls = 3; // Set this to the number of rolls you're allowed to make
+let rollsMade = 0;
+
+document.getElementById('rollButton').addEventListener('click', function() {
+  let currentTime = Date.now(); // Get the current time in milliseconds
+  let timeSinceLastRoll = currentTime - lastRollTime;
+  let timeBetweenRolls = 20000; // Set this to the minimum amount of time that must pass between rolls (in milliseconds)
+  
+  if (rollsMade >= maxRolls) {
+    document.getElementById('resultContainer').innerHTML = 'You have reached the maximum number of rolls for today. Please try again tomorrow.';
+  } else if (timeSinceLastRoll < timeBetweenRolls) {
+    let timeRemaining = (timeBetweenRolls - timeSinceLastRoll)/1000; // Convert time remaining to seconds
+    document.getElementById('resultContainer').innerHTML = `You must wait ${timeRemaining} seconds before you can roll again.`;
+  } else {
+    // Display the rolling animation while the roll function is running
+    document.getElementById('resultContainer').innerHTML = '<img src="loading.gif" alt="Rolling animation" />';
+    
+    let params = {
+      totalCandies: 3,
+      totalTime: 30,
+      rollEvery: 5
+    };
+    let loadingTime = 1000; // 1 second
+    roll(params.totalCandies, params.totalTime, params.rollEvery, loadingTime)
+      .then(rollResult => {
+        if (rollResult) {
+          document.getElementById('resultContainer').innerHTML = '<img src="success.jpeg" alt="Success image" />';
+        } else {
+          document.getElementById('resultContainer').innerHTML = '<img src="failure.jpeg" alt="Failure image" />';
+        }
+        lastRollTime = Date.now(); // Update the last roll time
+        rollsMade++; // Increment the number of rolls made
+      });
+  }
+});
+</script>
+</body>
+</html>
