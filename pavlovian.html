@@ -1,0 +1,68 @@
+<html>
+<body>
+<label>Total Candies: <input type="number" id="totalCandies" value="3" /></label>
+<br>
+<label>Total Time (minutes): <input type="number" id="totalTime" value="30" /></label>
+<br>
+<label>Roll Every (minutes): <input type="number" id="rollEvery" value="5" /></label>
+<br>
+<br>
+<button id="rollButton">Roll for candy</button>
+<div id="resultContainer"></div>
+<br>
+<div id="messageContainer"></div>
+
+<script>
+function roll(totalCandies, totalTime, rollEvery, loadingTime) {
+  let evPerRoll = totalCandies/totalTime;
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      if (Math.random() <= evPerRoll) {
+        resolve(true);
+      } else {
+        resolve(false);
+      }
+    }, loadingTime);
+  });
+}
+
+let lastRollTime = 0;
+
+document.getElementById('rollButton').addEventListener('click', function() {
+  // Check if enough time has passed since the last roll
+  let currentTime = Date.now();
+  let params = {
+    totalCandies: parseInt(document.getElementById('totalCandies').value),
+    totalTime: parseInt(document.getElementById('totalTime').value),
+    rollEvery: parseInt(document.getElementById('rollEvery').value)
+  };
+  let waitingTime = params.rollEvery * 60 * 1000; // Convert rollEvery from minutes to milliseconds
+  if (currentTime - lastRollTime < waitingTime) {
+    // Not enough time has passed since the last roll
+    let timeRemaining = Math.round((waitingTime - (currentTime - lastRollTime)) / 1000); // Convert milliseconds to seconds
+    document.getElementById('messageContainer').innerHTML = `You have to wait ${timeRemaining} seconds before rolling again.`;
+  } else {
+    // Display the rolling animation while the roll function is running
+    document.getElementById('resultContainer').innerHTML = '<img src="loading.gif" alt="Rolling animation" />';
+    
+    let loadingTime = 1000; // 1 second
+    roll(params.totalCandies, params.totalTime, params.rollEvery, loadingTime)
+      .then(rollResult => {
+        if (rollResult) {
+          document.getElementById('resultContainer').innerHTML = '<img src="success.jpeg" alt="Success image" />';
+        } else {
+          document.getElementById('resultContainer').innerHTML = '<img src="failure.jpeg" alt="Failure image" />';
+        }
+        lastRollTime = Date.now();
+      })
+      .catch(error => {
+
+
+      document.getElementById('resultContainer').innerHTML = 'An error occurred while rolling for candy.';
+      lastRollTime = Date.now();
+    });
+  }
+});
+</script>
+</body>
+</html>
